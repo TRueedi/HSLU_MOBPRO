@@ -4,24 +4,34 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.core.EaseIn
 import androidx.compose.animation.core.EaseOut
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ch.hslu.mobpro.ui.theme.HSLU_MOBPROTheme
 
@@ -53,8 +63,25 @@ class MainActivity : ComponentActivity() {
 fun HomeScreen(
     navController: NavHostController,
 ) {
-    Column {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ){
+
+        Text(
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(top = 4.dp),
+            text = "Welcome to the HomeScreen!",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.weight(1f))
         Button(
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(top = 16.dp),
             onClick = {
                 navController.navigate(
                     route = "${DemoApplicationScreen.Detail.name}/HomeScreen"
@@ -66,6 +93,8 @@ fun HomeScreen(
             )
         }
         Button(
+            modifier = Modifier
+                .align(Alignment.End),
             onClick = {
                 navController.navigate(
                     route = "${DemoApplicationScreen.Info.name}/HomeScreen/arg2Value"
@@ -76,6 +105,14 @@ fun HomeScreen(
                 text = "Go to InfoScreen!",
             )
         }
+        Text(
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(top = 4.dp),
+            text = "Wih the buttons above, we can navigate to a new screen",
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -128,7 +165,7 @@ fun DemoAppNavHost(
         {
                 navBackStackEntry ->
             val senderText = navBackStackEntry.arguments?.getString("senderText") ?: "error"
-            DetailScreen(senderText = senderText)
+            DetailScreen(senderText = senderText, navController = navController)
         }
         composable(
             route = "${DemoApplicationScreen.Info.name}/{senderText}/{arg2}",
@@ -164,19 +201,110 @@ fun DemoAppNavHost(
         { navBackStackEntry ->
             val senderText = navBackStackEntry.arguments?.getString("senderText") ?: "error"
             val arg2 = navBackStackEntry.arguments?.getString("arg2") ?: "default"
-            InfoScreen(senderText = senderText, arg2 = arg2)
+            InfoScreen(senderText = senderText, arg2 = arg2, navController = navController)
         }
     }
 }
 
 @Composable
-fun DetailScreen(senderText: String) {
-    Text("Welcome to the DetailScreen from $senderText")
+fun DetailScreen(
+    senderText: String,
+    navController: NavHostController,
+    ) {
+    Column (
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        Text (
+            modifier = Modifier
+                .align(Alignment.Start),
+            text = "Oben Anfang",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text (
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 160.dp),
+            text = "Oben Mitte",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text (
+            modifier = Modifier
+                .align(Alignment.End)
+                .padding(top = 160.dp),
+            text = "Mitte Ende",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text (
+            modifier = Modifier
+                .align(Alignment.CenterHorizontally)
+                .padding(top = 160.dp),
+            text = "Untern Mitte",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+        Text (
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(top = 160.dp),
+            text = "Unten Anfang",
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.secondary
+        )
+
+        Row (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+            verticalAlignment = Alignment.Bottom,
+            horizontalArrangement = Arrangement.SpaceAround
+        ){
+            Text(
+                text= "Welcome to the DetailScreen from $senderText",
+                style = MaterialTheme.typography.labelMedium,
+                color = MaterialTheme.colorScheme.primary
+            )
+            Button(
+                modifier = Modifier
+                    .padding(top = 16.dp),
+                onClick = {
+                    navController.popBackStack()
+                }
+            ) {
+                Text(
+                    text = "Go Back",
+                )
+            }
+        }
+    }
+
+
 }
 
 @Composable
-fun InfoScreen(senderText: String, arg2: String) {
-    Text("Welcome to the InfoScreen from $senderText and $arg2")
+fun InfoScreen(
+    senderText: String, arg2: String,
+    navController: NavHostController,
+    ) {
+    Column {
+        Text(
+            text= "Welcome to the InfoScreen from $senderText and $arg2",
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Button(
+            onClick = {
+                navController.popBackStack()
+            }
+        ) {
+            Text(
+                text = "Go Back",
+            )
+        }
+    }
 }
 
 enum class DemoApplicationScreen {
