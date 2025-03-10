@@ -213,10 +213,12 @@ fun DetailScreen(
     ) {
     Column (
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
         Text (
             modifier = Modifier
+                .weight(1f)
                 .align(Alignment.Start),
             text = "Oben Anfang",
             style = MaterialTheme.typography.bodyMedium,
@@ -225,7 +227,7 @@ fun DetailScreen(
         Text (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 160.dp),
+                .weight(1f),
             text = "Oben Mitte",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
@@ -233,7 +235,7 @@ fun DetailScreen(
         Text (
             modifier = Modifier
                 .align(Alignment.End)
-                .padding(top = 160.dp),
+                .weight(1f),
             text = "Mitte Ende",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
@@ -241,7 +243,7 @@ fun DetailScreen(
         Text (
             modifier = Modifier
                 .align(Alignment.CenterHorizontally)
-                .padding(top = 160.dp),
+                .weight(1f),
             text = "Untern Mitte",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
@@ -249,7 +251,7 @@ fun DetailScreen(
         Text (
             modifier = Modifier
                 .align(Alignment.Start)
-                .padding(top = 160.dp),
+                .weight(1f),
             text = "Unten Anfang",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.secondary
@@ -258,7 +260,7 @@ fun DetailScreen(
         Row (
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp),
+                .weight(0.4f),
             verticalAlignment = Alignment.Bottom,
             horizontalArrangement = Arrangement.SpaceAround
         ){
@@ -268,8 +270,7 @@ fun DetailScreen(
                 color = MaterialTheme.colorScheme.primary
             )
             Button(
-                modifier = Modifier
-                    .padding(top = 16.dp),
+                modifier = Modifier,
                 onClick = {
                     navController.popBackStack()
                 }
