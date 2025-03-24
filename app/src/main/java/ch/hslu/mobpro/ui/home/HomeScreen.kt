@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.ui
+package ch.hslu.mobpro.ui.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +22,6 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import ch.hslu.mobpro.DemoApplicationScreen
-import ch.hslu.mobpro.business.bands.BandCode
 import ch.hslu.mobpro.ui.bands.BandsViewModel
 import ch.hslu.mobpro.ui.theme.HSLU_MOBPROTheme
 
@@ -52,11 +51,17 @@ fun HomeScreen(
             )
             BottomButtonNavigation(
                 destinationName = destinationName,
-            ) {
-                navController.navigate(
-                    route = "${DemoApplicationScreen.Detail.name}/HomeScreen"
-                )
-            }
+                onNavigation = {
+                    navController.navigate(
+                        route = "${DemoApplicationScreen.Detail.name}/HomeScreen"
+                    )
+                },
+                onUserNavigation = {
+                    navController.navigate(
+                        route = "${DemoApplicationScreen.User.name}/UserScreen"
+                    )
+                }
+            )
         }
     }
 }
@@ -73,7 +78,8 @@ fun HomeScreenTitle() {
 @Composable
 fun BottomButtonNavigation(
     destinationName: String,
-    onNavigation: () -> Unit
+    onNavigation: () -> Unit,
+    onUserNavigation: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -87,6 +93,14 @@ fun BottomButtonNavigation(
         ) {
             Text(
                 text = "Go to $destinationName!",
+            )
+        }
+        Button(
+            modifier = Modifier,
+            onClick = onUserNavigation
+        ) {
+            Text(
+                text ="Go to UserScreen!",
             )
         }
         Text(
