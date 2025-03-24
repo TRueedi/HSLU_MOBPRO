@@ -1,4 +1,4 @@
-package ch.hslu.mobpro.ui
+package ch.hslu.mobpro.ui.info
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
