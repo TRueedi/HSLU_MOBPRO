@@ -58,15 +58,7 @@ class UserRepository(
     }
 
     fun getAllUsers(): Flow<List<UserEntity>> {
-        return dao.getAll().map { users ->
-            users.map { user ->
-                UserEntity(
-                    name = user.name,
-                    age = user.age,
-                    authorized = user.authorized
-                )
-            }
-        }
+        return dao.getAll()
     }
 
     companion object {

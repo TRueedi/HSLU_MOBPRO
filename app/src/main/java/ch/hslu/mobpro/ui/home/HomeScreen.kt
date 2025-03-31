@@ -60,6 +60,11 @@ fun HomeScreen(
                     navController.navigate(
                         route = "${DemoApplicationScreen.User.name}/UserScreen"
                     )
+                },
+                onComponentNavigation = {
+                    navController.navigate(
+                        route = "${DemoApplicationScreen.Components.name}/ComponentScreen"
+                    )
                 }
             )
         }
@@ -79,13 +84,22 @@ fun HomeScreenTitle() {
 fun BottomButtonNavigation(
     destinationName: String,
     onNavigation: () -> Unit,
-    onUserNavigation: () -> Unit
+    onUserNavigation: () -> Unit,
+    onComponentNavigation: () -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
         horizontalAlignment = Alignment.End
     ) {
+        Button(
+            modifier = Modifier,
+            onClick = onComponentNavigation
+        ) {
+            Text(
+                text ="Go to ComponentScreen!",
+            )
+        }
         Button(
             modifier = Modifier
                 .padding(top = 16.dp),

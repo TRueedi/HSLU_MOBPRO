@@ -1,4 +1,7 @@
 package ch.hslu.mobpro
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import ch.hslu.mobpro.ui.detail.DetailScreen
 import ch.hslu.mobpro.ui.home.HomeScreen
 import ch.hslu.mobpro.ui.user.UserScreen
@@ -30,12 +33,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import ch.hslu.mobpro.ui.bands.BandInfoScreen
+import ch.hslu.mobpro.ui.components.ComponentsScreen
 import ch.hslu.mobpro.ui.theme.HSLU_MOBPROTheme
 import ch.hslu.mobpro.ui.user.UserScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val channel = NotificationChannel(
+            "Ich bin ein Channel",
+            "Music player stuff",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+
         enableEdgeToEdge()
         setContent {
             HSLU_MOBPROTheme {
@@ -178,6 +192,32 @@ fun DemoAppNavHost(
             val senderText = navBackStackEntry.arguments?.getString("senderText") ?: "error"
             UserScreen(senderText = senderText, navController = navController)
         }
+        composable(
+            route = "${DemoApplicationScreen.Components.name}/{senderText}",
+            enterTransition = {
+                fadeIn(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideIntoContainer(
+                    animationSpec = tween(300, easing = EaseIn),
+                    towards = AnimatedContentTransitionScope.SlideDirection.Start
+                )
+            },
+            exitTransition = {
+                fadeOut(
+                    animationSpec = tween(
+                        300, easing = LinearEasing
+                    )
+                ) + slideOutOfContainer(
+                    animationSpec = tween(300, easing = EaseOut),
+                    towards = AnimatedContentTransitionScope.SlideDirection.End
+                )
+            }
+        )
+        {
+            ComponentsScreen()
+        }
     }
 }
 
@@ -187,7 +227,8 @@ enum class DemoApplicationScreen {
     Home,
     Detail,
     BandInfo,
-    User
+    User,
+    Components
 }
 
 
