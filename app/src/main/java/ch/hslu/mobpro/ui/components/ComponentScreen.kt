@@ -144,7 +144,9 @@ fun ProviderPartWithTabs() {
     val tabs = listOf("SMS", "Contacts")
     var selectedTabIndex by remember { mutableStateOf(0) }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
         Text(
             text = "Provider",
             style = MaterialTheme.typography.headlineSmall,
@@ -248,7 +250,9 @@ private fun readContacts(context: Context): List<String> {
     val contactsList = mutableListOf<String>()
     context.contentResolver.query(
         ContactsContract.Contacts.CONTENT_URI,
-        arrayOf(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY),
+        arrayOf(
+            ContactsContract.Contacts.DISPLAY_NAME_PRIMARY
+        ),
         null, null, null
     )?.use { cursor ->
         val nameIndex = cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME_PRIMARY)

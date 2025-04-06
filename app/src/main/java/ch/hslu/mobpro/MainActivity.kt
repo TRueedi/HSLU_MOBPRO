@@ -228,7 +228,7 @@ enum class DemoApplicationScreen {
     Detail,
     BandInfo,
     User,
-    Components
+    Components;
 }
 
 
