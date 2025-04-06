@@ -93,7 +93,8 @@ fun BottomButtonNavigation(
         horizontalAlignment = Alignment.End
     ) {
         Button(
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(top = 16.dp),
             onClick = onComponentNavigation
         ) {
             Text(
@@ -101,8 +102,7 @@ fun BottomButtonNavigation(
             )
         }
         Button(
-            modifier = Modifier
-                .padding(top = 16.dp),
+            modifier = Modifier,
             onClick = onNavigation
         ) {
             Text(
